@@ -1,0 +1,23 @@
+<%- include ("partials/header")%>
+
+<main class="main mx-auto m-lg-6">
+    <section class="container">
+        <div class="text-center mt-5">
+            <P class="h5">Bienvenido <%= user.name %></P>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <form action="<%= "/assignment/create-class/" +  user._id + "/"%>">
+                <button class="btn btn-primary col-12">Crear asignatura</button>
+            </form>
+            <form action="<%= "/homework/join-class/" +  user._id + "/"%>">
+                <button class="btn btn-primary col-12">Ingresar asignatura</button>
+            </form>
+            <form action="<%= "/assignment/show-classes/" +  user._id + "/"%>">
+                <button class="btn btn-primary col-12">Ver asignaturas</button>
+            </form>
+            <form action="/auth/logout">
+                <button class="btn btn-danger col-12">Salir</button>
+            </form>
+          </div>
+    </section>
+</main>

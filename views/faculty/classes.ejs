@@ -1,0 +1,26 @@
+<%- include ("../partials/header")%>
+
+<div class="">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+          Como profesor
+        </a>
+        <%for(var i=0 ; i<f_classes.length ; i++){%>
+            <a class="list-group-item list-group-item-action" href="<%="/assignment/" + f_classes[i]._id + "/" + id + "/"%>" >
+                <%= f_classes[i].class_name %>
+            </a>
+        <%}%>
+      </div>
+    
+    
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+          Como estudiante
+        </a>
+        <%for(var i=0 ; i< s_classes.length ; i++){%>
+            <a class="list-group-item list-group-item-action" href="<%="/homework/" + s_classes[i]._id + "/" + id + "/"%>" method="get">
+                <%= s_classes[i].class_name %>
+            </a>
+        <%}%>
+      </div>
+</div>

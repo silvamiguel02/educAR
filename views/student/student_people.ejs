@@ -1,0 +1,25 @@
+
+<%- include ("../partials/header")%>
+<div class="container">
+  <header class="d-flex justify-content-center py-3 text-center">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">Tareas</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">Alumnos</a></li>
+    </ul>
+  </header>
+</div>
+
+<ul class="list-group">
+  <li class="list-group-item active" aria-current="true">Profesor</li>
+  <li class="list-group-item"><%= fc_name%></li>
+</ul>
+
+<ul class="list-group">
+  <li class="list-group-item active" aria-current="true">Estudiantes</li>
+  <% for(var i=0 ; i<data.length ; i++){ %>
+    <div class="d-flex bd-highlight"></div>
+    <li class="list-group-item d-flex justify-content-start"><%= data[i].st_name%>
+    </li>
+  <% } %>
+</ul>

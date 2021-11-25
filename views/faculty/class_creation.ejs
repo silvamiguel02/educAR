@@ -1,0 +1,18 @@
+<%- include ("../partials/header")%>
+
+<main class="main mx-auto m-lg-6 container">
+    <div class="text-center">
+        <P class="h3 mb-3 mt-5">Bienvenido <%= name%></P>
+    </div>
+    <form action="<%="/assignment/create-class/" + id + "/"%>" method="post">
+        <div class="mb-3">
+          <label class="form-label">Ingrese nombre de la asignatura</label>
+          <input type="text" class="form-control" name="class_name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ingrese identificador unico</label>
+          <input type="number" class="form-control" name="joining_id">
+        </div>
+        <button type="submit" class="btn btn-primary">Crear materia</button>
+      </form>
+</main>

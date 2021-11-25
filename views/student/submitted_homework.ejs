@@ -1,0 +1,40 @@
+<%- include ("../partials/header")%>
+<div class="container">
+  <header class="d-flex justify-content-center py-3 text-center">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">Tareas</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">Alumnos</a></li>
+    </ul>
+  </header>
+</div>
+
+<div class="container">
+  <% for(var i=0 ; i<data.length ; i++){%>
+    <div class="alert alert-warning" role="alert">       
+        <div class="fw-bold">Submission for Assignment <%=data[i].title%></div>
+        <%for(var j=0 ; j<data[i].homework.length ; j++){%>
+        <%if(id == data[i].homework[j].st_id){%>
+        <div>
+           <div>
+            <a class="h6"
+            href="<%="/homework/images/" + data[i].homework[j].h_filename + "/" %>"><%= data[i].homework[j].hw_details %></a>
+           </div>
+           <div class="status">
+           <%if(data[i].homework[j].checked == null) {%>
+              <span>
+                Unchecked
+              </span>
+            <%}else{%>
+            <span>
+                Assigned marks - <%=data[i].homework[j].marks%>
+            </span>
+            <% }%>
+          </div>
+        </div>
+        <%}%>
+     <%}%>
+      </div>
+      <%}%>
+     </div>
+</div>

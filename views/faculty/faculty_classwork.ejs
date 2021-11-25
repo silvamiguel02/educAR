@@ -1,0 +1,40 @@
+<%- include ("../partials/header")%>
+<div class="container">
+    <header class="d-flex justify-content-center py-3 text-center">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">Alumnos</a></li>
+      </ul>
+    </header>
+</div>
+<div class="container">
+    <div class="text-center mb-3">
+        <button type="button" class="btn btn-primary ">
+            <a class="text-decoration-none text-white" href="<%="/assignment/create/" + cid + "/"%>">Crear tarea</a>
+        </button>
+    </div>
+    <div>
+        <%for(var i=0 ; i<data.length ; i++){%>
+        <div class="alert alert-secondary" role="alert">
+            <div class="cmsg">
+                <span class="icon">
+                    <i class="fas fa-tasks"></i>
+                </span>
+                <a class="text-decoration-none" href="<%= "/assignment/show-submitted-hw/" + data[i]._id + "/" + cid + "/" %>">
+                    <span class="c_ttl"><%=data[i].title  %>
+                        <a class="attach_doc" href="<%="/assignment/images/" + data[i].a_filename + "/" %>"><i
+                                class="fas fa-link"></i></a></span><br>
+                </a>
+                <span class="a_dtl"><%=data[i].a_details%></span>
+            </div>
+            <form class="d-flex justify-content-end" action="<%= "/assignment/assign-delete/" + data[i]._id + "/" + cid + "/" %>"
+                method="post">
+                <button class="btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </form>
+        </div>
+        <%}%>
+    </div>
+</div>

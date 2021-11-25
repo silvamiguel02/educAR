@@ -1,0 +1,60 @@
+<%- include ("../partials/header")%>
+<div class="container">
+    <header class="d-flex justify-content-center py-3 text-center">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">Alumnos</a></li>
+      </ul>
+    </header>
+</div>
+<div class="container">
+    <div class="left">
+        <div class="text-center">
+        <div class="h1">
+            <%= name %>
+        </div>
+        
+        <div class="h2">
+            ID de la asignatura - <%= jd %>
+        </div>
+        </div>
+        <div>
+            <div class="mb-3">
+                <form action="<%= "/discussion/" + cid + "/" + id + "/"%>" method="post">
+                    <label for="exampleFormControlTextarea1" class="form-label">¿Quiere decir algo?</label>
+                    <input class="form-control" type="text" rows="3" name="msg"></input>
+                </form>
+              </div>
+        </div>
+        <div>
+            <% for(var i=0 ; i<discussions.length ; i++) {%>
+            <div class="alert alert-secondary" role="alert">
+                <div class="d-flex justify-content-between">
+                    <div>
+                    <% if(data.fc_id === discussions[i].sender_id){ %>
+                        <span class="icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </span>
+                        <%}else{%>
+                        <span class="icon">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <%}%>  
+                    <span class="fw-bold"><%= discussions[i].sender_name %></span><br>
+                        <span class="fw-normal"><%= discussions[i].msg %></span><br>
+                    </div>
+                    <div>
+                        <a href="<%= "/assignment/delete-msg/" + cid + "/" + discussions[i]._id + "/" + id + "/"%>">
+                            <span class="dicon">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>  
+            </div>
+            <%}%>
+        </div>
+    </div>
+
+</div>
