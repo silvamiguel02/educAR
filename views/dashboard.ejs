@@ -1,9 +1,10 @@
 <%- include ("partials/header")%>
-
-<main class="main mx-auto m-lg-6">
-    <section class="container">
+<div class="container">
+    <%- include ("partials/messages")%>
+    <div class="row vh-100 justify-content-center align-items-center">
+      <div class="col-12">
         <div class="text-center mt-5">
-            <P class="h5">Bienvenido <%= user.name %></P>
+            <P class="h5">Bienvenido <%= user.name%></P>
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
             <form action="<%= "/assignment/create-class/" +  user._id + "/"%>">
@@ -19,5 +20,6 @@
                 <button class="btn btn-danger col-12">Salir</button>
             </form>
           </div>
-    </section>
-</main>
+      </div>
+    </div>
+</div>

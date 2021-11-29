@@ -1,7 +1,9 @@
 <%- include ("../partials/header")%>
 
-<div class="container mt-5">
-    <form action = "<%="/homework/home-create/" + id + "/" + cid + "/" + aid + "/"%>" method = "post" enctype="multipart/form-data">
+<div class="container">
+  <div class="row vh-100 justify-content-center align-items-center">
+    <div class="col-6">
+      <form action = "<%="/homework/home-create/" + id + "/" + cid + "/" + aid + "/"%>" method = "post" enctype="multipart/form-data">
         <div class="mb-3">
           <label class="form-label">Ingrese nombre de la tarea</label>
           <input type="text" class="form-control" name="h_name" required>
@@ -10,6 +12,8 @@
             <label for="file" class="form-label">Seleccione algun archivo. PDF, etc.</label>
             <input class="form-control" type="file" name="file" required>
           </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Enviar tarea</button>
       </form>
+    </div>
+  </div>
 </div>

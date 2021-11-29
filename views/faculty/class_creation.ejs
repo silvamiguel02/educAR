@@ -1,7 +1,9 @@
 <%- include ("../partials/header")%>
 
-<main class="main mx-auto m-lg-6 container">
-    <div class="text-center">
+<div class="container">
+  <div class="row vh-100 justify-content-center align-items-center">
+    <div class="col-6">
+      <div class="text-center">
         <P class="h3 mb-3 mt-5">Bienvenido <%= name%></P>
     </div>
     <form action="<%="/assignment/create-class/" + id + "/"%>" method="post">
@@ -15,4 +17,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Crear materia</button>
       </form>
-</main>
+    </div>
+  </div>
+</div>

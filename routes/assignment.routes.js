@@ -19,6 +19,8 @@ const mongoose = require("mongoose");
 const {Faculty, Class} = require("../models/Schema");
 const user = require("../models/User");
 
+const {accessFaculty} = require("../config/auth");
+
 router.use(bp.json());
 router.use(methodOverride("_method"));
 
@@ -55,7 +57,8 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-router.get("/create/:cid/", async (req, res) => {
+//Pagina para crear tarea - PRIVADO
+router.get("/create/:cid/",accessFaculty, async (req, res) => {
     try{
        res.render("./faculty/faculty_assign_create", { cid: req.params.cid });
     }
@@ -64,7 +67,8 @@ router.get("/create/:cid/", async (req, res) => {
     }
 });
 
-router.post("/assign-create/:id/", upload.single("file"), async (req, res) => {
+// RUTA-POST para crear la tarea
+router.post("/assign-create/:id/",accessFaculty,upload.single("file"), async (req, res) => {
     var filename = req.file.filename
    const id = req.params.id;
     try {
@@ -87,7 +91,8 @@ router.post("/assign-create/:id/", upload.single("file"), async (req, res) => {
     res.redirect(url);
 });
 
-router.post("/assign-delete/:id/:cid/", async (req, res) => {
+// RUTA-POST para eliminar la tarea
+router.post("/assign-delete/:id/:cid/",accessFaculty, async (req, res) => {
     try {
         var id = req.params.id;
         var cid = req.params.cid;
@@ -98,8 +103,6 @@ router.post("/assign-delete/:id/:cid/", async (req, res) => {
                 $pull:
                     { "assignments": { "_id": id } }
             });
-
-        console.log("uuuuu" , data);
     }
     catch (e) {
         console.log("Error", e);
@@ -108,7 +111,8 @@ router.post("/assign-delete/:id/:cid/", async (req, res) => {
     res.redirect(url);
 });
 
-router.get("/assign-show/:cid/", async (req, res) => {
+// Pagina para ver las tareas enviadas en la asignatura - PRIVADO
+router.get("/assign-show/:cid/",accessFaculty, async (req, res) => {
     try {
         var cid = req.params.cid;
         const data = await Class.findById(cid);
@@ -123,6 +127,7 @@ router.get("/assign-show/:cid/", async (req, res) => {
     }
 });
 
+// Pagina para ver el archivo de la tarea - PUBLICO
 router.get("/images/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
       if (!file || file.length === 0) {
@@ -137,6 +142,7 @@ router.get("/images/:filename", (req, res) => {
   });
 });
 
+// Pagina para crear asignatura - PUBLICO
 router.get("/create-class/:id/", async (req, res) => {
     try{
         var id =   req.params.id;
@@ -149,6 +155,7 @@ router.get("/create-class/:id/", async (req, res) => {
     }
 });
 
+// RUTA-POST para crear la asignatura
 router.post("/create-class/:id/", async (req, res) => {
     console.log("post");
     try {
@@ -177,7 +184,8 @@ router.post("/create-class/:id/", async (req, res) => {
     }
 });
 
-router.get("/show-students/:cid/", async (req, res) => {
+// Pagina para ver los estudiantes de la asignatura - PRIVADO
+router.get("/show-students/:cid/",accessFaculty, async (req, res) => {
     try {
         var cid = req.params.cid;
         const data = await Class.findById(cid);
@@ -190,6 +198,7 @@ router.get("/show-students/:cid/", async (req, res) => {
     }
 });
 
+// Pagina para ver las asignaturas - TODOS
 router.get("/show-classes/:id/", async (req, res) => {
     try{
     var id = req.params.id;
@@ -210,7 +219,8 @@ router.get("/show-classes/:id/", async (req, res) => {
     }
 });
 
-router.get("/student-remove/:id/:cid/:sid/", async (req, res) => {
+// RUTA-GET para eliminar a un estudiante de la asignatura
+router.get("/student-remove/:id/:cid/:sid/",accessFaculty, async (req, res) => {
     var id = req.params.id;
     var cid = req.params.cid;
     try {
@@ -231,7 +241,8 @@ router.get("/student-remove/:id/:cid/:sid/", async (req, res) => {
     res.redirect(url);
 });
 
-router.get("/delete-msg/:cid/:id/:uid/" , async (req , res)=>{
+// RUTA-GET para eliminar un post de la asignatura
+router.get("/delete-msg/:cid/:id/:uid/",accessFaculty, async (req , res)=>{
     try{
         var id = req.params.id;
         var cid = req.params.cid;
@@ -249,7 +260,8 @@ router.get("/delete-msg/:cid/:id/:uid/" , async (req , res)=>{
     res.redirect(url);
 });
 
-router.get("/Show-submitted-hw/:aid/:cid/" , async (req , res)=>{
+// Pagina para ver la revision de la tarea - PRIVADO
+router.get("/Show-submitted-hw/:aid/:cid/",accessFaculty, async (req , res)=>{
     var aid = req.params.aid;
     var cid = req.params.cid;
     //var hid = req.params.hid;
@@ -280,7 +292,8 @@ router.get("/Show-submitted-hw/:aid/:cid/" , async (req , res)=>{
     }
 });
 
-router.post("/marking/:aid/:cid/:hid/" , async (req , res)=>{
+// RUTA-POST para dar nota a la tarea
+router.post("/marking/:aid/:cid/:hid/",accessFaculty, async (req , res)=>{
     var aid = req.params.aid;
     var cid = req.params.cid;
     var hid = req.params.hid;
@@ -339,7 +352,8 @@ router.post("/marking/:aid/:cid/:hid/" , async (req , res)=>{
     }
 });
 
-router.get("/:cid/:id/", async (req, res) => {
+//Pagina dashboard del profesor - PRIVADO
+router.get("/:cid/:id/",accessFaculty, async (req, res) => {
     try{
     var cid = req.params.cid;
     var id = req.params.id;

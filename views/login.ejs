@@ -1,18 +1,22 @@
 <%- include ("partials/header")%>
-<div class="container mt-3">
-  <form action="/auth/login" method="POST">
-    <%- include ("partials/messages")%>
-    <div class="mb-3">
-      <label class="form-label">Email address</label>
-      <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+<div class="container">
+  <div class="row vh-100 justify-content-center align-items-center">
+    <div class="col-6">
+      <form action="/auth/login" method="POST">
+        <%- include ("partials/messages")%>
+        <div class="mb-3">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" required>
+        </div>
+        <div class="mb-3">
+          No tienes cuenta? <a id = "a" href="/register">Registrate aqui</a>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar</button>
+      </form>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-control" name="password">
-    </div>
-    <div class="mb-3">
-      No tienes cuenta? <a id = "a" href="/register">Registrate aqui</a>
-    </div>
-    <button type="submit" class="btn btn-primary">Iniciar</button>
-  </form>
+  </div>
 </div>

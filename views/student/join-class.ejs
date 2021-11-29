@@ -1,7 +1,8 @@
 <%- include ("../partials/header")%>
-
-<main class="main mx-auto m-lg-6 container">
-    <div class="text-center mt-5">
+<div class="container">
+  <div class="row vh-100 justify-content-center align-items-center">
+    <div class="col-6">
+      <div class="text-center mt-5">
         <P class="h3 mb-3">Bienvenido <%= name%></P>
     </div>
     <form action= "<%="/homework/join-class/" + id + "/"%>" method="post">
@@ -10,5 +11,7 @@
           <input type="number" class="form-control" name="joining_id">
         </div>
         <button type="submit" class="btn btn-primary">Ingresar a la materia</button>
-      </form>
-</main>
+    </form>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,8 @@ const mongoose = require("mongoose");
 const {Class} = require("../models/Schema");
 const user = require("../models/User");
 
+const {accessStudent} = require("../config/auth");
+
 router.use(bp.json());
 router.use(methodOverride("_method"));
 
@@ -55,11 +57,13 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-router.get("/classwork/:id/:cid/:aid/", async (req, res) => {
+//Pagina para enviar la tarea
+router.get("/classwork/:id/:cid/:aid/",accessStudent, async (req, res) => {
     res.render("./student/create_homework.ejs", { id: req.params.id, cid: req.params.cid, aid: req.params.aid });
 });
 
-router.post("/home-create/:id/:cid/:aid/", upload.single("file"), async (req, res) => {
+//RUTA-POST para enviar tarea
+router.post("/home-create/:id/:cid/:aid/",accessStudent, upload.single("file"), async (req, res) => {
     var filename = req.file.filename;
     const cid = req.params.cid;
     try {
@@ -92,6 +96,7 @@ router.post("/home-create/:id/:cid/:aid/", upload.single("file"), async (req, re
     res.redirect(url);
 });
 
+//Pagina para el archivo enviado
 router.get("/images/:filename", (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         if (!file || file.length === 0) {
@@ -105,6 +110,7 @@ router.get("/images/:filename", (req, res) => {
         //}
     });
 });
+
 
 router.post("/home-delete/:aid/:cid/:hid/", async (req, res) => {
     var uid;
@@ -136,7 +142,8 @@ router.post("/home-delete/:aid/:cid/:hid/", async (req, res) => {
     res.redirect(url);
 });
 
-router.get("/home-show/:cid/:id/", async (req, res) => {
+//Pagina para ver las calificaciones de las tareas
+router.get("/home-show/:cid/:id/",accessStudent, async (req, res) => {
     try {
         var cid = req.params.cid;
         const data = await Class.find({ "_id": cid });
@@ -148,7 +155,8 @@ router.get("/home-show/:cid/:id/", async (req, res) => {
     }
 });
 
-router.get("/assignments/:id/:cid/", async (req, res) => {
+//Pagina para ver las tareas
+router.get("/assignments/:id/:cid/",accessStudent, async (req, res) => {
     try {
         var data = await Class.findById(req.params.cid);
         data = data.assignments;
@@ -163,6 +171,7 @@ router.get("/assignments/:id/:cid/", async (req, res) => {
     }
 });
 
+//Pagina para ingresar a una asignatura
 router.get("/join-class/:id/", async (req, res) => {
     try {
         const data = await user.findById(req.params.id);
@@ -174,7 +183,8 @@ router.get("/join-class/:id/", async (req, res) => {
     }
 });
 
-router.post("/join-class/:id/", async (req, res) => {
+//RUTA-POST para entrar a una asignatura
+router.post("/join-class/:id/",accessStudent, async (req, res) => {
     var joining_id = req.body.joining_id;
     var id = req.params.id;
     try {
@@ -188,7 +198,6 @@ router.post("/join-class/:id/", async (req, res) => {
             var check = 0;
             for(var i=0 ; i<data[0].st_id.length ; i++){
                 if(data[0].st_id[i].st_id == id){
-                    console.log(data[0].st_id[i].st_id , "ujujuj" , id);
                     check = 1;
                 }
             }
@@ -236,7 +245,8 @@ router.post("/join-class/:id/", async (req, res) => {
     }
 });
 
-router.get("/delete-msg/:cid/:id/:uid/" , async (req , res)=>{
+//RUTA-GET para borrar comentario
+router.get("/delete-msg/:cid/:id/:uid/",accessStudent, async (req , res)=>{
     try{
         var id = req.params.id;
         var cid = req.params.cid;
@@ -254,7 +264,8 @@ router.get("/delete-msg/:cid/:id/:uid/" , async (req , res)=>{
     res.redirect(url);
 });
 
-router.get("/show-classmates/:cid/:uid" , async (req , res)=>{
+// Pagina para ver estudiantes de la asignatura
+router.get("/show-classmates/:cid/:uid",accessStudent, async (req , res)=>{
     try {
         var cid = req.params.cid;
         const data = await Class.findById(cid);
@@ -267,7 +278,8 @@ router.get("/show-classmates/:cid/:uid" , async (req , res)=>{
     }
   });
 
-router.get("/:cid/:id/", async (req, res) => {
+//Pagina dashboard del estudiante
+router.get("/:cid/:id/",accessStudent, async (req, res) => {
     var cid = req.params.cid;
     var id = req.params.id;
     console.log(id);

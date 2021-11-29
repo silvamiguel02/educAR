@@ -8,14 +8,13 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 
+const {ensureAuthenticated} = require('./config/auth');
+
 //Routes path
 const Routes = require("./routes/routes");
 const authRoute = require("./routes/auth.routes");
 const assignmentRoute = require("./routes/assignment.routes");
 const homeworkRoute = require("./routes/homework.routes");
-
-
-
 
 const app = express();
 dotenv.config();
@@ -71,8 +70,8 @@ app.use(morgan("common"));
 //routes
 app.use("/",Routes);
 app.use("/auth",authRoute);
-app.use("/assignment",assignmentRoute);
-app.use("/homework",homeworkRoute);
+app.use("/assignment",ensureAuthenticated,assignmentRoute);
+app.use("/homework",ensureAuthenticated,homeworkRoute);
 
 app.listen(8800, () => {
     console.log('REST-API esta en funcionamiento')
