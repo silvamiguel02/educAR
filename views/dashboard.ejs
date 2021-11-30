@@ -3,22 +3,57 @@
     <%- include ("partials/messages")%>
     <div class="row vh-100 justify-content-center align-items-center">
       <div class="col-12">
-        <div class="text-center mt-5">
-            <P class="h5">Bienvenido <%= user.name%></P>
-        </div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <form action="<%= "/assignment/create-class/" +  user._id + "/"%>">
-                <button class="btn btn-primary col-12">Crear asignatura</button>
-            </form>
-            <form action="<%= "/homework/join-class/" +  user._id + "/"%>">
-                <button class="btn btn-primary col-12">Ingresar asignatura</button>
-            </form>
-            <form action="<%= "/assignment/show-classes/" +  user._id + "/"%>">
-                <button class="btn btn-primary col-12">Ver asignaturas</button>
-            </form>
-            <form action="/auth/logout">
-                <button class="btn btn-danger col-12">Salir</button>
-            </form>
+        <div class="row">
+            <div class="col-lg-12 p-5">
+              <h1> <i class="fa fa-tachometer" aria-hidden="true"></i>📕Dashboard - <%= user.name%> 🙌</h1>
+              <hr />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+              <a class="text-decoration-none text-dark" href="<%= "/assignment/create-class/" +  user._id + "/"%>">
+                <div class="card p-3 shadow bg-purple text-center border-0">
+                  <div class="card-body">
+                    <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
+                    <hr />
+                    <p class="card-title lead">Crear asignatura</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+              <a class="text-decoration-none text-dark" href="<%= "/homework/join-class/" +  user._id + "/"%>">
+                <div class="card p-3 shadow bg-purple text-center border-0">
+                  <div class="card-body">
+                    <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                    <hr />
+                    <p class="card-title lead">Ingresar asig.</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+              <a class="text-decoration-none text-dark" href="<%= "/assignment/show-classes/" +  user._id + "/"%>">
+                <div class="card p-3 shadow bg-purple text-center border-0">
+                  <div class="card-body">
+                    <i class="fa fa-book fa-2x" aria-hidden="true"></i>
+                    <hr />
+                    <p class="card-title lead">Ver asignaturas</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+              <a class="text-decoration-none text-danger" href="/auth/logout">
+                <div class="card p-3 shadow bg-purple text-center border-0">
+                  <div class="card-body">
+                    <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                    <hr />
+                    <p class="card-title lead fw-bold">Salir</p>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
       </div>
     </div>

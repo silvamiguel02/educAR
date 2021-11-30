@@ -1,29 +1,29 @@
 <%- include ("partials/header")%>
 <div class="container">
   <div class="row vh-100 justify-content-center align-items-center">
-    <div class="col-6">
+    <div class="col-auto">
       <form action="/auth/register" method="POST">
         <%- include ("partials/messages")%>
         <div class="mb-3">
-          <label class="form-label">Nombre</label>
+          <label class="form-label">🔋Nombre de pila</label>
           <input type="text" class="form-control" name="name" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Email address</label>
+          <label class="form-label">📩Correo electronico</label>
           <input type="email" class="form-control" name="email" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Password</label>
+          <label class="form-label">🔐Contraseña</label>
           <input type="password" class="form-control" name="password" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Password</label>
+          <label class="form-label">🔐Repite la contraseña</label>
           <input type="password" class="form-control" name="password2" required>
         </div>
         <div class="mb-3">
-          <p>¿No tienes cuenta? <a id = "a" href="/login">Registrate aqui</a></p>
+          <p>👉¿Tienes cuenta? <a id = "a" href="/login">Inicia con tu cuenta</a></p>
         </div>
-        <button type="submit" class="btn btn-primary">Registrarse</button>
+        <button type="submit" class="btn btn-primary">Empezar a estudiar✍</button>
       </form>
     </div>
   </div>

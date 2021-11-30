@@ -3,24 +3,24 @@
 <div class="container">
     <header class="d-flex justify-content-center py-3 text-center">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link active" href="<%="/homework/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">Tareas</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">Alumnos</a></li>
-        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+        <li class="nav-item"><a class="nav-link active" href="<%="/homework/" + cid + "/" + id + "/" %>">📰Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">📚Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">👨‍🎓Alumnos</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
       </ul>
     </header>
 </div>
 <div class="container">
     <div class="left">
         <div class="text-center">
-        <div class="h1">
-            <%= name %>
+        <div class="h1 fw-bold">
+            📖<%= name %>
         </div>
         </div>
         <div>
             <div class="mb-3">
                 <form action="<%= "/discussion/" + cid + "/" + id + "/"%>" method="post">
-                    <label for="exampleFormControlTextarea1" class="form-label">¿Quiere decir algo?</label>
+                    <label for="exampleFormControlTextarea1" class="form- fw-bold">📢¿Quiere decir algo?</label>
                     <input class="form-control" type="text" rows="3" name="msg"></input>
                 </form>
               </div>
@@ -32,22 +32,25 @@
                     <div>
                     <% if(data.fc_id === discussions[i].sender_id){ %>
                         <span class="icon">
-                            <i class="fas fa-chalkboard-teacher"></i>
+                            👩‍🏫
                         </span>
                         <%}else{%>
                         <span class="icon">
-                            <i class="fas fa-users"></i>
+                            👨‍🎓
                         </span>
                         <%}%>  
                     <span class="fw-bold"><%= discussions[i].sender_name %></span><br>
                         <span class="fw-normal"><%= discussions[i].msg %></span><br>
                     </div>
                     <div>
-                        <a href="<%= "/homework/delete-msg/" + cid + "/" + discussions[i]._id + "/" + id + "/"%>">
-                            <span class="dicon">
-                                <i class="fas fa-times"></i>
-                            </span>
-                        </a>
+                        <% if(data.fc_id === discussions[i].sender_id){ %>
+                        <%}else{%>
+                            <a href="<%= "/homework/delete-msg/" + cid + "/" + discussions[i]._id + "/" + id + "/"%>">
+                                <span class="dicon">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </a>
+                        <%}%>
                     </div>
                 </div>  
             </div>

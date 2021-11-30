@@ -1,25 +1,28 @@
 <%- include ("../partials/header")%>
-<div class="">
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-          Como profesor
-        </a>
+<form action="/dashboard">
+  <button class="btn btn-danger col-12 border-0">🎒Ir al tablon</button>
+</form>
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12">
+      <p class="fw-bold"><i class="fa fa-tachometer h3 py-3" aria-hidden="true"></i>👩‍🏫Como profesor</p>
+        <hr/>
+      <div class="list-group">
         <%for(var i=0 ; i<f_classes.length ; i++){%>
             <a class="list-group-item list-group-item-action" href="<%="/assignment/" + f_classes[i]._id + "/" + id + "/"%>" >
                 <%= f_classes[i].class_name %>
             </a>
         <%}%>
       </div>
-    
-    
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-          Como estudiante
-        </a>
+      <p class="fw-bold"><i class="fa fa-tachometer h3 py-3" aria-hidden="true"></i>👨‍🎓Como estudiante</p>
+        <hr/>
+      <div class="list-group">
         <%for(var i=0 ; i< s_classes.length ; i++){%>
             <a class="list-group-item list-group-item-action" href="<%="/homework/" + s_classes[i]._id + "/" + id + "/"%>" method="get">
                 <%= s_classes[i].class_name %>
             </a>
         <%}%>
       </div>
+    </div>
+  </div>
 </div>

@@ -2,17 +2,17 @@
 <div class="container">
     <header class="d-flex justify-content-center py-3 text-center">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-        <li class="nav-item"><a class="nav-link active" href="<%="/assignment/assign-show/" + cid + "/" %>">Tareas</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">Alumnos</a></li>
-        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">📰Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link active" href="<%="/assignment/assign-show/" + cid + "/" %>">📚Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">👨‍🎓Alumnos</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
       </ul>
     </header>
 </div>
 <div class="container">
     <div class="text-center mb-3">
         <button type="button" class="btn btn-primary ">
-            <a class="text-decoration-none text-white" href="<%="/assignment/create/" + cid + "/"%>">Crear tarea</a>
+            <a class="text-decoration-none text-white" href="<%="/assignment/create/" + cid + "/"%>">😱Crear tarea</a>
         </button>
     </div>
     <div>
@@ -20,7 +20,7 @@
         <div class="alert alert-secondary" role="alert">
             <div class="cmsg">
                 <span class="icon">
-                    <i class="fas fa-tasks"></i>
+                    📘
                 </span>
                 <a class="text-decoration-none" href="<%= "/assignment/show-submitted-hw/" + data[i]._id + "/" + cid + "/" %>">
                     <span class="c_ttl"><%=data[i].title  %>

@@ -2,29 +2,33 @@
 <div class="container">
   <header class="d-flex justify-content-center py-3 text-center">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-      <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">Tareas</a></li>
-      <li class="nav-item"><a class="nav-link active" href="<%="/assignment/show-students/" + cid  + "/"%>">Alumnos</a></li>
-      <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/assignment/" + cid + "/" + id + "/" %>">📰Publicaciones</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">📚Tareas</a></li>
+      <li class="nav-item"><a class="nav-link active" href="<%="/assignment/show-students/" + cid  + "/"%>">👨‍🎓Alumnos</a></li>
+      <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
     </ul>
   </header>
 </div>
-
+<div class="container">
+  <p class="fw-bold"><i class="fa fa-tachometer h3 py-3" aria-hidden="true"></i>👩‍🏫Profesor</p>
+<hr/>
 <ul class="list-group">
-  <li class="list-group-item active" aria-current="true">Profesor</li>
   <li class="list-group-item"><%= fc_name%></li>
 </ul>
-
+<p class="fw-bold"><i class="fa fa-tachometer h3 py-3" aria-hidden="true"></i>👨‍🎓Estudiantes</p>
+        <hr/>
 <ul class="list-group">
-  <li class="list-group-item active" aria-current="true">Estudiantes</li>
   <% for(var i=0 ; i<data.length ; i++){ %>
     <div class="d-flex bd-highlight"></div>
-    <li class="list-group-item d-flex justify-content-start"><%= data[i].st_name%>
-      <div class="">
-        <span class="ms-3">
-          <a href= "<%="/assignment/student-remove/" + data[i]._id + "/" + cid + "/" + data[i].st_id + "/" %>" >Expulsar estudiante</a>
-        </span>
+    <li class="list-group-item d-flex justify-content-between"><%= data[i].st_name%>
+      <div>
+        <a href="<%="/assignment/student-remove/" + data[i]._id + "/" + cid + "/" + data[i].st_id + "/" %>">
+          <span class="dicon">
+            <i class="fas fa-times"></i>
+          </span>
+        </a>
       </div>
-    </li>
+    </li> 
   <% } %>
 </ul>
+</div>

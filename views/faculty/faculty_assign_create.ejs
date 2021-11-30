@@ -1,21 +1,24 @@
 <%- include ("../partials/header")%>
+<form action="/dashboard">
+  <button class="btn btn-danger col-12 border-0">🎒Ir al tablon</button>
+</form>
 <div class="container">
   <div class="row vh-100 justify-content-center align-items-center">
     <div class="col-6">
       <form action = "<%="/assignment/assign-create/" + cid + "/"%>" method = "post" enctype="multipart/form-data">
         <div class="mb-3">
-          <label class="form-label">Ingrese nombre de la tarea</label>
+          <label class="form-label">📋Ingrese nombre de la tarea</label>
           <input type="text" class="form-control" name="a_name" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Mas detalles sobre la tarea</label>
+          <label class="form-label">👏Más detalles sobre la tarea</label>
           <textarea type="text" class="form-control" name="a_details"></textarea>
         </div>
         <div class="mb-3">
-            <label for="file" class="form-label">Seleccione algun archivo. PDF, etc.</label>
+            <label for="file" class="form-label">📂Seleccione algun archivo</label>
             <input class="form-control" type="file" name="file" required>
           </div>
-        <button type="submit" class="btn btn-primary">Enviar tarea</button>
+        <button type="submit" class="btn btn-primary">Publicar tarea👌</button>
       </form>
     </div>
   </div>

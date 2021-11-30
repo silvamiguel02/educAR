@@ -2,28 +2,25 @@
 <div class="container">
     <header class="d-flex justify-content-center py-3 text-center">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link active" href="<%="/assignment/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">Tareas</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">Alumnos</a></li>
-        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+        <li class="nav-item"><a class="nav-link active" href="<%="/assignment/" + cid + "/" + id + "/" %>">📰Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/assign-show/" + cid + "/" %>">📚Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/assignment/show-students/" + cid  + "/"%>">👨‍🎓Alumnos</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
       </ul>
     </header>
 </div>
 <div class="container">
     <div class="left">
         <div class="text-center">
-        <div class="h1">
-            <%= name %>
+        <div class="h1 fw-bold">
+            📖<%= name %>
         </div>
-        
-        <div class="h2">
-            ID de la asignatura - <%= jd %>
-        </div>
+        <h3>🔑ID de la asignatura <span class="badge bg-primary"><%= jd %></span></h3>
         </div>
         <div>
             <div class="mb-3">
                 <form action="<%= "/discussion/" + cid + "/" + id + "/"%>" method="post">
-                    <label for="exampleFormControlTextarea1" class="form-label">¿Quiere decir algo?</label>
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold">📢¿Quiere decir algo?</label>
                     <input class="form-control" type="text" rows="3" name="msg"></input>
                 </form>
               </div>
@@ -35,11 +32,11 @@
                     <div>
                     <% if(data.fc_id === discussions[i].sender_id){ %>
                         <span class="icon">
-                            <i class="fas fa-chalkboard-teacher"></i>
+                            👩‍🏫
                         </span>
                         <%}else{%>
                         <span class="icon">
-                            <i class="fas fa-users"></i>
+                            👨‍🎓
                         </span>
                         <%}%>  
                     <span class="fw-bold"><%= discussions[i].sender_name %></span><br>

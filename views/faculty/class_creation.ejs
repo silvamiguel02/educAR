@@ -1,22 +1,25 @@
 <%- include ("../partials/header")%>
-
+<form action="/dashboard">
+  <button class="btn btn-danger col-12 border-0">🎒Ir al tablon</button>
+</form>
+<%- include ("../partials/messages")%>
 <div class="container">
   <div class="row vh-100 justify-content-center align-items-center">
-    <div class="col-6">
-      <div class="text-center">
-        <P class="h3 mb-3 mt-5">Bienvenido <%= name%></P>
-    </div>
-    <form action="<%="/assignment/create-class/" + id + "/"%>" method="post">
+    <div class="col-lg-12 p-5 text-start">
+      <h1><i class="fa fa-tachometer" aria-hidden="true"></i>¿Quieres crear una asignatura <%= name%>😊? </h1>
+      <hr />
+      <form action="<%="/assignment/create-class/" + id + "/"%>" method="post">
         <div class="mb-3">
-          <label class="form-label">Ingrese nombre de la asignatura</label>
+          <label class="form-label">📖Ingrese nombre de la asignatura</label>
           <input type="text" class="form-control" name="class_name">
         </div>
         <div class="mb-3">
-          <label class="form-label">Ingrese identificador unico</label>
+          <label class="form-label">🔑Ingrese identificador unico</label>
           <input type="number" class="form-control" name="joining_id">
         </div>
-        <button type="submit" class="btn btn-primary">Crear materia</button>
+        <button type="submit" class="btn btn-primary">Crear asignatura👍</button>
       </form>
+    </div>
     </div>
   </div>
 </div>

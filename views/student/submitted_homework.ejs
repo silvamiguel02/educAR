@@ -2,18 +2,15 @@
 <div class="container">
   <header class="d-flex justify-content-center py-3 text-center">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a class="nav-link" href="<%="/homework/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-      <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">Tareas</a></li>
-      <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">Alumnos</a></li>
-      <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+      <li class="nav-item"><a class="nav-link" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">📚Volver atras</a></li>
+      <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
     </ul>
   </header>
 </div>
-
 <div class="container">
   <% for(var i=0 ; i<data.length ; i++){%>
     <div class="alert alert-warning" role="alert">       
-        <div class="fw-bold">Submission for Assignment <%=data[i].title%></div>
+        <div class="fw-bold">📄Tarea enviada - <%=data[i].title%></div>
         <%for(var j=0 ; j<data[i].homework.length ; j++){%>
         <%if(id == data[i].homework[j].st_id){%>
         <div>
@@ -23,12 +20,12 @@
            </div>
            <div class="status">
            <%if(data[i].homework[j].checked == null) {%>
-              <span>
-                Unchecked
+              <span class="text-danger">
+                No chequeado⛔
               </span>
             <%}else{%>
-            <span>
-                Assigned marks - <%=data[i].homework[j].marks%>
+            <span class="text-success fw-bold">
+              Chequeado <%=data[i].homework[j].marks%>✅
             </span>
             <% }%>
           </div>

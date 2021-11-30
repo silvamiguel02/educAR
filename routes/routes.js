@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/midlewares');
 
 const user = require("../models/User");
-const {Class} = require("../models/Schema");
+const Class = require("../models/Class");
 
 router.get('/',forwardAuthenticated,(req, res) => res.render('login'));
 router.get('/dashboard', ensureAuthenticated, (req, res) =>
@@ -16,10 +16,12 @@ router.get('/register',forwardAuthenticated, (req, res) => res.render('register'
 
 router.post("/discussion/:cid/:id/", async (req, res)=>{
   try {
-    var cid = req.params.cid;
-    var id = req.params.id;
-    const data = await user.findById(id);
-    const cdata = await Class.findOneAndUpdate({ "_id": cid },
+    const msg = req.body.msg;
+    if(msg.length > 0){
+      var cid = req.params.cid;
+      var id = req.params.id;
+      const data = await user.findById(id);
+      const cdata = await Class.findOneAndUpdate({ "_id": cid },
       {
         $push:
         {
@@ -44,6 +46,10 @@ router.post("/discussion/:cid/:id/", async (req, res)=>{
         const url = "/homework/" + cid + "/" + id + "/";
         res.redirect(url);
       }
+    }else{
+      req.flash('error_msg', 'Tiene que ingresar un texto')
+      res.redirect('/dashboard');
+    }
   }
   catch (e) {
     console.log(e);

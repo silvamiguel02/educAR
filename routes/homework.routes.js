@@ -1,34 +1,34 @@
 const express = require('express');
 const router = express.Router();
-
 require('dotenv').config();
 require("express-ejs-layouts");
 require("express-layouts");
 
-var bp = require("body-parser");
-const path = require("path");
-const crypto = require("crypto");
-const multer = require("multer");
-const {GridFsStorage}  = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
-const methodOverride = require("method-override");
-
-
-//BD
+//Database
 const mongoose = require("mongoose");
-const {Class} = require("../models/Schema");
+const Class = require("../models/Class");
 const user = require("../models/User");
 
-const {accessStudent} = require("../config/auth");
+//Restricciones
+const {accessStudent} = require("../config/midlewares");
 
-router.use(bp.json());
+//Modulos para subir una imagen
+const bodyParser = require('body-parser');
+const path = require('path');
+const crypto = require('crypto');
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
+
+
+router.use(bodyParser.json());
 router.use(methodOverride("_method"));
-
-router.use(bp.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({ extended: false }));
 router.use(express.static("public"));
 
-const mongoURL = "mongodb+srv://user_node_educar:1fNjVEDcS08KkU3O@educar.tbflt.mongodb.net/educAR"
-const conn = mongoose.createConnection( process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoURL = process.env.MONGO_URL;
+const conn = mongoose.createConnection(mongoURL);
 let gfs;
 
 conn.once('open', () => {
@@ -104,13 +104,10 @@ router.get("/images/:filename", (req, res) => {
                 err: "No file found"
             })
         }
-        //if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
         const readstream = gfs.createReadStream(file.filename);
         readstream.pipe(res);
-        //}
     });
 });
-
 
 router.post("/home-delete/:aid/:cid/:hid/", async (req, res) => {
     var uid;
@@ -176,7 +173,6 @@ router.get("/join-class/:id/", async (req, res) => {
     try {
         const data = await user.findById(req.params.id);
         var name = data.name;
-        console.log(name);
         res.render("./student/join-class", { id: req.params.id  , name : name });
     } catch (e) {
         console.log("Error", e);
@@ -184,14 +180,12 @@ router.get("/join-class/:id/", async (req, res) => {
 });
 
 //RUTA-POST para entrar a una asignatura
-router.post("/join-class/:id/",accessStudent, async (req, res) => {
+router.post("/join-class/:id/", async (req, res) => {
     var joining_id = req.body.joining_id;
     var id = req.params.id;
     try {
-        console.log("id" , id);
         var u_data = await user.findById(id);
         const data = await Class.find({ joining_id: joining_id });
-        console.log(data);
         if (data.length > 0) {
             var fc = data[0].fc_id;
             var name = data[0].class_name;
@@ -201,12 +195,8 @@ router.post("/join-class/:id/",accessStudent, async (req, res) => {
                     check = 1;
                 }
             }
-            console.log("check" , check);
             if (check == 0) {
-                console.log(fc);
-                console.log(id);
                 if (fc !== id) {
-                    console.log("achha");
                     await Class.findOneAndUpdate({ joining_id: joining_id },
                         {
                             $push:
@@ -221,7 +211,6 @@ router.post("/join-class/:id/",accessStudent, async (req, res) => {
                             }
                         });
                     const data = await Class.find({ joining_id: joining_id });
-                    console.log(data);
                     res.render("./student/student_dashboard" , {data : data ,
                          discussions : data[0].discussion ,
                           cid : data[0]._id ,
@@ -229,15 +218,18 @@ router.post("/join-class/:id/",accessStudent, async (req, res) => {
                            id : id});
                 }
                 else {
-                    res.send("You are the teacher itself");
+                    req.flash('error_msg', 'Usted es profesor')
+                    res.redirect("/homework/join-class/"+id+"/")
                 }
             }
             else {
-                res.send("You are already enrolled")
+                req.flash('error_msg', 'Usted ya esta inscrito')
+                res.redirect("/homework/join-class/"+id+"/")
             }
         }
         else {
-            res.send("oops wrong joining id");
+            req.flash('error_msg', 'Identificacion erronea')
+            res.redirect("/homework/join-class/"+id+"/")
         }
     }
     catch (e) {

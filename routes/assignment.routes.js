@@ -1,43 +1,50 @@
 const express = require('express');
 const router = express.Router();
-
 require('dotenv').config();
 require("express-ejs-layouts");
 require("express-layouts");
 
-var bp = require("body-parser");
-const path = require("path");
-const crypto = require("crypto");
-const multer = require("multer");
-const {GridFsStorage}  = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
-const methodOverride = require("method-override");
-
-
-//BD
+//Database
 const mongoose = require("mongoose");
-const {Faculty, Class} = require("../models/Schema");
+const Class = require("../models/Class");
 const user = require("../models/User");
 
-const {accessFaculty} = require("../config/auth");
+//Restricciones
+const {accessFaculty} = require("../config/midlewares");
 
-router.use(bp.json());
-router.use(methodOverride("_method"));
+//Modulos para subir una imagen
+const bodyParser = require('body-parser');
+const path = require('path');
+const crypto = require('crypto');
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
 
-router.use(bp.urlencoded({ extended: false }));
+// Middleware
+router.use(bodyParser.json());
+router.use(methodOverride('_method'));
+router.use(bodyParser.urlencoded({ extended: false }));
 router.use(express.static("public"));
 
-const mongoURL = "mongodb+srv://user_node_educar:1fNjVEDcS08KkU3O@educar.tbflt.mongodb.net/educAR"
-const conn = mongoose.createConnection( process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+// Mongo URI
+const mongoURI = 'mongodb+srv://user_node_educar:1fNjVEDcS08KkU3O@educar.tbflt.mongodb.net/educAR';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
 let gfs;
 
 conn.once('open', () => {
+    // Init stream
     gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection("uploads");
-})
+    gfs.collection('uploads');
+});
 
+// Create storage engine
 const storage = new GridFsStorage({
-    url: mongoURL,
+    url: mongoURI,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buf) => {
@@ -54,7 +61,6 @@ const storage = new GridFsStorage({
         });
     }
 });
-
 const upload = multer({ storage });
 
 //Pagina para crear tarea - PRIVADO
@@ -68,8 +74,8 @@ router.get("/create/:cid/",accessFaculty, async (req, res) => {
 });
 
 // RUTA-POST para crear la tarea
-router.post("/assign-create/:id/",accessFaculty,upload.single("file"), async (req, res) => {
-    var filename = req.file.filename
+router.post("/assign-create/:id/",upload.single("file"), async (req, res) => {
+   var filename = req.file.filename
    const id = req.params.id;
     try {
         await Class.findOneAndUpdate({ "_id": id },
@@ -129,17 +135,17 @@ router.get("/assign-show/:cid/",accessFaculty, async (req, res) => {
 
 // Pagina para ver el archivo de la tarea - PUBLICO
 router.get("/images/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-      if (!file || file.length === 0) {
-          return res.status(404).json({
-              err: "No file found"
-          })
-      }
-      //if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-          const readstream = gfs.createReadStream(file.filename);
-          readstream.pipe(res);
-      //}
-  });
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: "No file found"
+            })
+        }
+        //if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+        const readstream = gfs.createReadStream(file.filename);
+        readstream.pipe(res);
+        //}
+    });
 });
 
 // Pagina para crear asignatura - PUBLICO
@@ -157,23 +163,22 @@ router.get("/create-class/:id/", async (req, res) => {
 
 // RUTA-POST para crear la asignatura
 router.post("/create-class/:id/", async (req, res) => {
-    console.log("post");
     try {
         const data = await user.find({ _id: req.params.id })
-        const g = await Faculty.create({
-            fc_name: data[0].name,
-            fc_id: data[0]._id,
-        });
         const ifFound = await Class.find({ joining_id: req.body.joining_id });
         if (ifFound != '') {
             res.render("./faculty/class_creation", { id: req.params.id  ,name : data[0].name });
+        }
+        if (!req.body.joining_id || !req.body.class_name) {
+            req.flash('error_msg', 'Por favor ingrese los datos')
+            res.redirect("/assignment/create-class/"+req.user._id+"/")
         }
         else {
             const c = await Class.create({
                 class_name: req.body.class_name,
                 joining_id: req.body.joining_id,
-                fc_name: g.fc_name,
-                fc_id: g.fc_id,
+                fc_name: data[0].name,
+                fc_id: data[0]._id,
             });
             const url = "/assignment/" + c._id + "/" + req.params.id + "/";
             res.redirect(url);
@@ -210,8 +215,6 @@ router.get("/show-classes/:id/", async (req, res) => {
                 st_id: req.params.id
             }
         }});
-        console.log("yha tak to");
-        //res.send("vuk");
     res.render("./faculty/classes.ejs" , {  s_classes : s_classes  , f_classes: f_classes  , id :id});
     }
     catch(e){

@@ -1,23 +1,23 @@
+require('dotenv').config();
 const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const helmet = require("helmet");
-const morgan = require("morgan");
 const expressLayouts = require('express-ejs-layouts');
+const mongoose = require("mongoose");
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
+const helmet = require("helmet");
+const morgan = require("morgan");
 
-const {ensureAuthenticated} = require('./config/auth');
+const PORT = process.env.PORT || 8800;
+const {ensureAuthenticated} = require('./config/midlewares');
+
+const app = express();
 
 //Routes path
 const Routes = require("./routes/routes");
 const authRoute = require("./routes/auth.routes");
 const assignmentRoute = require("./routes/assignment.routes");
 const homeworkRoute = require("./routes/homework.routes");
-
-const app = express();
-dotenv.config();
 
 // Passport Config
 require('./config/passport')(passport);
@@ -29,8 +29,6 @@ mongoose.connect(
       console.log("Conectado correctamente a la BD");
     }
 );
-
-app.use(express.static("public"));
 
 //ejs
 app.use(expressLayouts);
@@ -63,8 +61,6 @@ app.use(function (req, res, next) {
 });
 
 //middleware
-app.use(express.json());
-app.use(helmet());
 app.use(morgan("common"));
 
 //routes
@@ -73,6 +69,6 @@ app.use("/auth",authRoute);
 app.use("/assignment",ensureAuthenticated,assignmentRoute);
 app.use("/homework",ensureAuthenticated,homeworkRoute);
 
-app.listen(8800, () => {
-    console.log('REST-API esta en funcionamiento')
+app.listen(PORT, () => {
+    console.log(`REST-API esta en funcionamiento ${ PORT }`)
 });

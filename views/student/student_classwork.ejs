@@ -3,17 +3,17 @@
 <div class="container">
     <header class="d-flex justify-content-center py-3 text-center">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link" href="<%="/homework/" + cid + "/" + id + "/" %>">Publicaciones</a></li>
-        <li class="nav-item"><a class="nav-link active" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">Tareas</a></li>
-        <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">Alumnos</a></li>
-        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">Ir al tablon</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/homework/" + cid + "/" + id + "/" %>">📰Publicaciones</a></li>
+        <li class="nav-item"><a class="nav-link active" href="<%="/homework/assignments/" + id + "/" + cid + "/"%>">📚Tareas</a></li>
+        <li class="nav-item"><a class="nav-link" href="<%="/homework/show-classmates/" + cid  + "/" + id + "/" %>">👨‍🎓Alumnos</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="/dashboard" %>">🎒Ir al tablon</a></li>
       </ul>
     </header>
 </div>
 <div class="container">
     <div class="text-center mb-3">
         <button type="button" class="btn btn-primary ">
-            <a class="text-decoration-none text-white" href="<%="/homework/home-show/" + cid + "/" + id + "/"%>">Ver calificaciones</a>
+            <a class="text-decoration-none text-white" href="<%="/homework/home-show/" + cid + "/" + id + "/"%>">⭐Ver calificaciones</a>
         </button>
     </div>
     <div>
@@ -22,7 +22,7 @@
         <div class="alert alert-secondary" role="alert">
             <div class="cmsg">
                 <span class="icon">
-                    <i class="fas fa-tasks"></i>
+                    📘
                 </span>
                 <span class="c_ttl"><%=data[i].title  %>
                     <a class="attach_doc" href="<%="/assignment/images/" + data[i].a_filename + "/" %>"><i

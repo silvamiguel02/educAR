@@ -81,7 +81,7 @@ router.post('/login', (req, res, next) => {
 // Logout
 router.get('/logout', (req, res) => {
     req.logout();
-    req.flash('success_msg', 'Fue desconectado');
+    req.flash('success_msg', 'Fue desconectado exitosamente');
     res.redirect('/login');
 });
 
